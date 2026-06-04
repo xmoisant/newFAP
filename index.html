@@ -1,0 +1,1172 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>France Affichage Plus - Prototype</title>
+  <style>
+    :root {
+      --blue: #078fc3;
+      --blue-dark: #0476a8;
+      --blue-deep: #075d81;
+      --blue-light: #2ab0df;
+      --green: #2aa75a;
+      --orange: #f19a49;
+      --red: #da4140;
+      --purple: #9a58b8;
+      --surface: #ffffff;
+      --muted: #f1f3f5;
+      --line: #d7d7d7;
+      --text: #424242;
+      --shadow: 0 2px 5px rgba(0, 0, 0, .22);
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      background: #e9eef2;
+    }
+
+    .map-bg {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 78% -10%, rgba(255, 255, 255, .08), transparent 17rem),
+        linear-gradient(135deg, rgba(4, 99, 142, .9), rgba(3, 166, 218, .92));
+    }
+
+    .map-bg::before,
+    .map-bg::after {
+      content: "";
+      position: absolute;
+      inset: -14%;
+      opacity: .13;
+      pointer-events: none;
+      background:
+        linear-gradient(22deg, transparent 0 18%, rgba(255,255,255,.85) 18% 19.8%, transparent 19.8% 100%),
+        linear-gradient(70deg, transparent 0 28%, rgba(255,255,255,.72) 28% 30%, transparent 30% 100%),
+        linear-gradient(110deg, transparent 0 42%, rgba(255,255,255,.74) 42% 44%, transparent 44% 100%),
+        linear-gradient(155deg, transparent 0 58%, rgba(255,255,255,.7) 58% 60%, transparent 60% 100%),
+        repeating-linear-gradient(35deg, transparent 0 84px, rgba(255,255,255,.55) 84px 93px, transparent 93px 174px);
+      transform: rotate(-8deg) scale(1.08);
+    }
+
+    .map-bg::after {
+      inset: 4% -8% auto -8%;
+      height: 44%;
+      opacity: .11;
+      background:
+        radial-gradient(circle at 32% 52%, transparent 0 24px, rgba(255,255,255,.8) 25px 32px, transparent 33px),
+        radial-gradient(circle at 78% 55%, transparent 0 20px, rgba(255,255,255,.8) 21px 28px, transparent 29px),
+        linear-gradient(90deg, transparent 0 42%, rgba(255,255,255,.72) 42% 44%, transparent 44%),
+        linear-gradient(130deg, transparent 0 48%, rgba(255,255,255,.72) 48% 50.5%, transparent 50.5%);
+      transform: none;
+    }
+
+    .logo {
+      display: inline-grid;
+      place-items: center;
+      width: 76px;
+      height: 76px;
+      border: 3px solid #fff;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 0 2px #ec5353;
+      color: #fff;
+      flex: 0 0 auto;
+    }
+
+    .logo.small {
+      width: 68px;
+      height: 68px;
+    }
+
+    .logo-mark {
+      position: relative;
+      width: 43px;
+      height: 28px;
+      margin-top: 4px;
+    }
+
+    .logo-mark::before,
+    .logo-mark::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      width: 21px;
+      height: 28px;
+      background: #fff;
+      border-radius: 2px 2px 7px 2px;
+      transform-origin: bottom center;
+    }
+
+    .logo-mark::before {
+      left: 3px;
+      transform: rotate(42deg);
+    }
+
+    .logo-mark::after {
+      right: 3px;
+      transform: rotate(-42deg);
+    }
+
+    .logo-text {
+      margin-top: -6px;
+      font-size: 10px;
+      line-height: .86;
+      letter-spacing: 2px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: none;
+    }
+
+    body:not(.dashboard-mode) .login-screen {
+      display: grid;
+    }
+
+    body.dashboard-mode .dashboard-screen {
+      display: block;
+    }
+
+    .login-screen {
+      grid-template-rows: auto 1fr auto;
+      min-height: 100vh;
+      padding: 28px 20px 16px;
+    }
+
+    .login-logo-wrap {
+      display: flex;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .login-card {
+      align-self: start;
+      justify-self: center;
+      position: relative;
+      z-index: 1;
+      width: min(390px, calc(100vw - 40px));
+      margin-top: 26px;
+      padding: 21px 20px 24px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: var(--shadow);
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      margin-bottom: 17px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .select-control,
+    .filter-input {
+      height: 40px;
+      width: 100%;
+      border: 1px solid #c9c9c9;
+      border-radius: 5px;
+      background: #fff;
+      padding: 0 15px;
+      color: #555;
+      font-size: 12px;
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, .03);
+    }
+
+    .password-row {
+      position: relative;
+    }
+
+    .password-row input {
+      padding-right: 42px;
+    }
+
+    .eye {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      width: 14px;
+      height: 10px;
+      border: 1.8px solid #444;
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+
+    .eye::after {
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 2px;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: #444;
+    }
+
+    .login-actions {
+      display: grid;
+      justify-items: center;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .primary-button {
+      display: inline-grid;
+      grid-template-columns: 1fr 49px;
+      align-items: center;
+      height: 52px;
+      min-width: 195px;
+      padding: 0;
+      border: 0;
+      border-radius: 4px;
+      color: #fff;
+      background: var(--blue);
+      font-size: 12px;
+      text-transform: uppercase;
+      text-decoration: none;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .primary-button span:first-child {
+      padding: 0 20px;
+    }
+
+    .primary-button .icon-box {
+      display: grid;
+      place-items: center;
+      height: 100%;
+      background: #087dac;
+      font-size: 33px;
+      line-height: 1;
+    }
+
+    .link {
+      color: #007dd6;
+      font-size: 14px;
+      text-decoration: underline;
+    }
+
+    .login-footer {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .login-footer strong {
+      grid-column: 2;
+      font-weight: 700;
+    }
+
+    .login-footer a {
+      justify-self: end;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .topbar {
+      height: 89px;
+      display: grid;
+      grid-template-columns: 325px 54px 1fr;
+      background: var(--blue);
+      color: #fff;
+      border-bottom: 1px solid rgba(255, 255, 255, .8);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 17px;
+      padding-left: 43px;
+      border-right: 1px solid rgba(255,255,255,.22);
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .brand-title {
+      font-size: 24px;
+      line-height: 1.05;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    .menu-cell {
+      display: grid;
+      place-items: center;
+      border-right: 1px solid rgba(255,255,255,.25);
+      font-size: 31px;
+      opacity: .65;
+    }
+
+    .profile {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      padding-right: 27px;
+      font-size: 14px;
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 29%, #696969 0 15px, transparent 16px),
+        radial-gradient(ellipse at 50% 78%, #696969 0 33px, transparent 34px),
+        #8a8a8a;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      min-height: calc(100vh - 89px);
+    }
+
+    .sidebar {
+      background: var(--blue);
+      color: #fff;
+      border-right: 1px solid #0a80b0;
+      padding-top: 40px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      height: 52px;
+      padding: 0 33px;
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,.5);
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .nav-item.active {
+      background: #fff;
+      color: #078fc3;
+    }
+
+    .nav-icon {
+      width: 27px;
+      height: 27px;
+      display: grid;
+      place-items: center;
+      color: inherit;
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .content {
+      background: #f5f6f7;
+    }
+
+    .hero {
+      height: 184px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 318px;
+      align-items: start;
+      margin: 40px 0 0;
+      color: #fff;
+      background:
+        linear-gradient(90deg, rgba(0, 105, 148, .98), rgba(0, 143, 195, .72) 58%, rgba(5, 70, 92, .9)),
+        linear-gradient(30deg, transparent 0 38%, rgba(255,255,255,.12) 38% 40%, transparent 40%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -35% 25% -55% -8%;
+      opacity: .13;
+      background:
+        repeating-linear-gradient(33deg, transparent 0 55px, #fff 55px 64px, transparent 64px 105px),
+        linear-gradient(113deg, transparent 0 42%, #fff 42% 44%, transparent 44%);
+      transform: rotate(-4deg);
+    }
+
+    .welcome {
+      position: relative;
+      padding: 14px 0 0 20px;
+      font-size: 30px;
+      line-height: 1.06;
+      font-weight: 300;
+    }
+
+    .welcome strong {
+      display: block;
+      font-size: 41px;
+      font-weight: 300;
+      letter-spacing: 1px;
+    }
+
+    .france-pin {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 184px;
+      opacity: .92;
+    }
+
+    .pin {
+      position: relative;
+      width: 78px;
+      height: 106px;
+      margin-top: 6px;
+      border-radius: 44px 44px 44px 8px;
+      background: var(--blue);
+      border: 1px solid rgba(255,255,255,.85);
+      transform: rotate(-45deg);
+      box-shadow: 0 2px 4px rgba(0,0,0,.25);
+    }
+
+    .pin .logo {
+      position: absolute;
+      left: 11px;
+      top: 11px;
+      width: 54px;
+      height: 54px;
+      transform: rotate(45deg);
+      box-shadow: none;
+      border-width: 1px;
+    }
+
+    .pin .logo-mark {
+      transform: scale(.62);
+      margin-top: -2px;
+    }
+
+    .pin .logo-text {
+      display: none;
+    }
+
+    .france-outline {
+      position: absolute;
+      top: 86px;
+      width: 122px;
+      height: 76px;
+      border: 1px solid rgba(255,255,255,.8);
+      clip-path: polygon(20% 14%, 35% 10%, 46% 2%, 59% 15%, 76% 13%, 83% 31%, 94% 39%, 85% 54%, 91% 72%, 72% 82%, 56% 94%, 44% 82%, 28% 88%, 21% 68%, 6% 62%, 14% 43%, 5% 27%);
+    }
+
+    .inner {
+      max-width: 1040px;
+      margin: 0 auto;
+      background: #fff;
+    }
+
+    .page-title {
+      margin: 22px 0 9px;
+      padding-left: 25px;
+      color: #008bd2;
+      font-weight: 300;
+      font-size: 37px;
+      text-transform: uppercase;
+    }
+
+    .controls {
+      margin: 0 25px;
+      background: #fff;
+    }
+
+    .control-top {
+      display: grid;
+      gap: 16px;
+      padding: 20px;
+    }
+
+    .campaign-row,
+    .route-row {
+      display: grid;
+      align-items: center;
+      column-gap: 10px;
+    }
+
+    .campaign-row {
+      grid-template-columns: 180px 275px 1fr auto;
+    }
+
+    .route-row {
+      grid-template-columns: 180px 200px 180px 200px 84px;
+    }
+
+    .control-bottom {
+      background: #ececec;
+      padding: 15px 15px 17px;
+    }
+
+    .control-bottom-title {
+      margin-bottom: 29px;
+      font-size: 16px;
+      text-transform: uppercase;
+    }
+
+    .filters-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(120px, 1fr));
+      gap: 44px;
+      padding: 0 20px;
+    }
+
+    .control-label {
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .select-wrap {
+      display: grid;
+      grid-template-columns: 1fr 38px;
+    }
+
+    .select-control {
+      border-radius: 4px 0 0 4px;
+      border-right: 0;
+    }
+
+    .select-arrow {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 40px;
+      color: #fff;
+      background: var(--blue);
+      border-radius: 0 4px 4px 0;
+      font-size: 15px;
+    }
+
+    .small-button {
+      justify-self: end;
+      height: 32px;
+      border: 0;
+      border-radius: 4px;
+      background: var(--blue);
+      color: #fff;
+      padding: 0 13px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .campaign {
+      margin: 14px 25px 0;
+      padding-bottom: 28px;
+      background: #fff;
+    }
+
+    .campaign h2 {
+      margin: 0 0 10px;
+      color: #4d4d4d;
+      font-size: 30px;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 238px repeat(3, 1fr);
+      gap: 14px;
+      align-items: stretch;
+    }
+
+    .total-card {
+      grid-row: span 2;
+      min-height: 348px;
+      background: var(--blue);
+      color: #fff;
+      padding: 17px 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .total-card h3 {
+      margin: 0;
+      font-size: 31px;
+      line-height: 1.2;
+      font-weight: 300;
+      text-transform: uppercase;
+    }
+
+    .total-card h3 strong {
+      font-weight: 800;
+    }
+
+    .roller {
+      position: absolute;
+      left: 48px;
+      bottom: 30px;
+      width: 118px;
+      height: 125px;
+      opacity: .42;
+    }
+
+    .roller::before {
+      content: "";
+      position: absolute;
+      left: 40px;
+      top: 16px;
+      width: 64px;
+      height: 82px;
+      background: #fff;
+      transform: rotate(-42deg);
+    }
+
+    .roller::after {
+      content: "";
+      position: absolute;
+      left: 2px;
+      top: 72px;
+      width: 88px;
+      height: 28px;
+      border-radius: 16px;
+      background: #fff;
+      transform: rotate(48deg);
+    }
+
+    .roller-handle {
+      position: absolute;
+      left: -5px;
+      top: 103px;
+      width: 73px;
+      height: 10px;
+      border-radius: 8px;
+      background: #fff;
+      transform: rotate(-47deg);
+    }
+
+    .roller-handle::after {
+      content: "";
+      position: absolute;
+      right: -5px;
+      top: -3px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    .total-number {
+      position: absolute;
+      right: 46px;
+      bottom: 104px;
+      font-size: 44px;
+      font-weight: 800;
+    }
+
+    .stat-card {
+      min-height: 164px;
+      color: #fff;
+      padding: 16px 15px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card.green { background: var(--green); }
+    .stat-card.orange { background: var(--orange); }
+    .stat-card.cyan { background: var(--blue-light); }
+    .stat-card.red { background: var(--red); }
+    .stat-card.purple { background: var(--purple); }
+
+    .stat-label {
+      max-width: 180px;
+      font-size: 18px;
+      line-height: 1.08;
+      text-transform: uppercase;
+    }
+
+    .stat-label strong {
+      display: block;
+      font-size: 21px;
+      line-height: 1;
+    }
+
+    .stat-value {
+      position: absolute;
+      right: 16px;
+      top: 70px;
+      font-size: 31px;
+      font-weight: 800;
+    }
+
+    .stat-percent {
+      position: absolute;
+      right: 16px;
+      bottom: 23px;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .shield {
+      position: absolute;
+      left: 17px;
+      bottom: 28px;
+      width: 47px;
+      height: 64px;
+      opacity: .3;
+      border: 3px solid #fff;
+      border-radius: 7px 7px 19px 19px;
+      clip-path: polygon(0 0, 100% 0, 100% 62%, 50% 100%, 0 62%);
+    }
+
+    .shield::before,
+    .shield::after {
+      content: "";
+      position: absolute;
+      background: #fff;
+      border-radius: 3px;
+    }
+
+    .shield.check::before {
+      left: 13px;
+      top: 27px;
+      width: 14px;
+      height: 27px;
+      transform: rotate(-45deg);
+    }
+
+    .shield.check::after {
+      left: 22px;
+      top: 20px;
+      width: 33px;
+      height: 10px;
+      transform: rotate(-45deg);
+    }
+
+    .shield.cross::before {
+      left: 19px;
+      top: 16px;
+      width: 8px;
+      height: 35px;
+      transform: rotate(45deg);
+    }
+
+    .shield.cross::after {
+      left: 19px;
+      top: 16px;
+      width: 8px;
+      height: 35px;
+      transform: rotate(-45deg);
+    }
+
+    .plus-icon {
+      position: absolute;
+      left: 22px;
+      bottom: 42px;
+      width: 42px;
+      height: 42px;
+      opacity: .32;
+    }
+
+    .plus-icon::before,
+    .plus-icon::after {
+      content: "";
+      position: absolute;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    .plus-icon::before {
+      left: 16px;
+      top: 0;
+      width: 10px;
+      height: 42px;
+    }
+
+    .plus-icon::after {
+      left: 0;
+      top: 16px;
+      width: 42px;
+      height: 10px;
+    }
+
+    .stat-card .roller {
+      left: 15px;
+      bottom: 22px;
+      transform: scale(.55);
+      transform-origin: left bottom;
+    }
+
+    .details {
+      margin-top: 24px;
+      padding: 0 6px;
+      font-size: 14px;
+    }
+
+    .detail-row {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 10px;
+      min-height: 74px;
+      align-items: center;
+      border-bottom: 1px solid #cfcfcf;
+    }
+
+    .detail-row dt {
+      color: #007dd6;
+      text-transform: uppercase;
+    }
+
+    .detail-row dd {
+      margin: 0;
+      color: #5c5c5c;
+    }
+
+    @media (max-width: 980px) {
+      .topbar {
+        grid-template-columns: 1fr 54px;
+      }
+
+      .brand {
+        padding-left: 20px;
+      }
+
+      .profile {
+        display: none;
+      }
+
+      .shell {
+        grid-template-columns: 76px minmax(0, 1fr);
+      }
+
+      .sidebar {
+        padding-top: 18px;
+      }
+
+      .nav-item {
+        justify-content: center;
+        padding: 0;
+      }
+
+      .nav-item span:not(.nav-icon) {
+        display: none;
+      }
+
+      .hero {
+        margin-top: 20px;
+        grid-template-columns: 1fr;
+      }
+
+      .france-pin {
+        display: none;
+      }
+
+      .campaign-row,
+      .route-row,
+      .filters-grid,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .small-button {
+        justify-self: start;
+      }
+
+      .total-card {
+        grid-row: auto;
+        min-height: 210px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        height: 76px;
+        grid-template-columns: 1fr 48px;
+      }
+
+      .brand-title {
+        font-size: 18px;
+      }
+
+      .logo.small {
+        width: 54px;
+        height: 54px;
+      }
+
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: flex;
+        padding: 0;
+        overflow-x: auto;
+      }
+
+      .nav-item {
+        min-width: 72px;
+        border-right: 1px solid rgba(255,255,255,.35);
+      }
+
+      .inner {
+        margin: 0;
+      }
+
+      .welcome {
+        font-size: 24px;
+      }
+
+      .welcome strong {
+        font-size: 32px;
+      }
+
+      .page-title {
+        font-size: 29px;
+        padding: 0 16px;
+      }
+
+      .controls,
+      .campaign {
+        margin-left: 14px;
+        margin-right: 14px;
+      }
+
+      .detail-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 15px 0;
+      }
+
+      .login-footer {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        text-align: center;
+      }
+
+      .login-footer strong,
+      .login-footer a {
+        grid-column: auto;
+        justify-self: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="screen login-screen map-bg" aria-label="Connexion France Affichage Plus">
+    <div class="login-logo-wrap">
+      <div class="logo" aria-label="France Affichage Plus">
+        <div class="logo-mark"></div>
+        <div class="logo-text">FRANCE<br>AFFICHAGE<br>PLUS</div>
+      </div>
+    </div>
+
+    <section class="login-card" aria-label="Formulaire de connexion">
+      <label class="field">
+        Identifiant
+        <input type="text" placeholder="Saisissez votre identifiant">
+      </label>
+      <label class="field">
+        Mot de passe
+        <span class="password-row">
+          <input type="password" placeholder="Saisissez votre mot de passe">
+          <span class="eye" aria-hidden="true"></span>
+        </span>
+      </label>
+      <div class="login-actions">
+        <a class="primary-button" href="#dashboard">
+          <span>Se connecter</span>
+          <span class="icon-box" aria-hidden="true">↪</span>
+        </a>
+        <a class="link" href="#login">Mot de passe oublié</a>
+      </div>
+    </section>
+
+    <footer class="login-footer">
+      <strong>France Affichage Plus-V 1.0</strong>
+      <a href="#login">Politique de confidentialité</a>
+    </footer>
+  </main>
+
+  <main class="screen dashboard-screen" aria-label="Tableau de bord France Affichage Plus">
+    <header class="topbar">
+      <a class="brand" href="#login" aria-label="Retour à la connexion">
+        <div class="logo small">
+          <div class="logo-mark"></div>
+          <div class="logo-text">FRANCE<br>AFFICHAGE<br>PLUS</div>
+        </div>
+        <div class="brand-title">France<br>Affichage Plus</div>
+      </a>
+      <div class="menu-cell" aria-hidden="true">≡</div>
+      <div class="profile">
+        <div class="avatar" aria-hidden="true"></div>
+        <span>Xavier</span>
+        <span aria-hidden="true">⌄</span>
+      </div>
+    </header>
+
+    <div class="shell">
+      <nav class="sidebar" aria-label="Navigation principale">
+        <a class="nav-item" href="#dashboard">
+          <span class="nav-icon" aria-hidden="true">▦</span>
+          <span>Dashboard</span>
+        </a>
+        <a class="nav-item active" href="#dashboard">
+          <span class="nav-icon" aria-hidden="true">⌂</span>
+          <span>Home</span>
+        </a>
+        <a class="nav-item" href="#dashboard">
+          <span class="nav-icon" aria-hidden="true">☷</span>
+          <span>Administration</span>
+        </a>
+        <a class="nav-item" href="#dashboard">
+          <span class="nav-icon" aria-hidden="true">▥</span>
+          <span>Mes campagnes</span>
+        </a>
+      </nav>
+
+      <section class="content">
+        <div class="inner">
+          <section class="hero" aria-label="Bienvenue">
+            <h1 class="welcome">Bienvenue <strong>Xavier MOISANT</strong></h1>
+            <div class="france-pin" aria-hidden="true">
+              <div class="pin">
+                <div class="logo">
+                  <div class="logo-mark"></div>
+                  <div class="logo-text">FRANCE<br>AFFICHAGE<br>PLUS</div>
+                </div>
+              </div>
+              <div class="france-outline"></div>
+            </div>
+          </section>
+
+          <h2 class="page-title">Votre espace FAP mobile</h2>
+
+          <section class="controls" aria-label="Filtres campagne">
+            <div class="control-top">
+              <div class="campaign-row">
+                <span class="control-label">Choisisser la campagne</span>
+                <label class="select-wrap">
+                  <input class="select-control" value="Municipales 2026 - Paris 2nd tour" aria-label="Campagne">
+                  <span class="select-arrow" aria-hidden="true">⌄</span>
+                </label>
+                <span></span>
+                <button class="small-button">Voir les tableaux de suivi</button>
+              </div>
+              <div class="route-row">
+                <span class="control-label">Choisissez le tour</span>
+                <label class="select-wrap">
+                  <input class="select-control" value="Tour 1" aria-label="Tour">
+                  <span class="select-arrow" aria-hidden="true">⌄</span>
+                </label>
+                <span class="control-label">Choisissez le passage</span>
+                <label class="select-wrap">
+                  <input class="select-control" value="Passage 1" aria-label="Passage">
+                  <span class="select-arrow" aria-hidden="true">⌄</span>
+                </label>
+                <button class="small-button">Filtrer</button>
+              </div>
+            </div>
+            <div class="control-bottom">
+              <div class="control-bottom-title">Affinez votre recherche par :</div>
+              <div class="filters-grid">
+                <label class="field">
+                  Région
+                  <input class="filter-input" type="text" placeholder="Région">
+                </label>
+                <label class="field">
+                  Département
+                  <input class="filter-input" type="text" placeholder="Département">
+                </label>
+                <label class="field">
+                  Ville
+                  <input class="filter-input" type="text" placeholder="Ville">
+                </label>
+                <label class="field">
+                  Etat
+                  <input class="filter-input" type="text" placeholder="Etat panneau">
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <section class="campaign" aria-label="Statistiques campagne">
+            <h2>Municipales 2026 - Paris 2nd Tour</h2>
+            <div class="stats">
+              <article class="total-card">
+                <h3><strong>Total</strong><br>des<br>panneaux</h3>
+                <div class="roller" aria-hidden="true"><span class="roller-handle"></span></div>
+                <div class="total-number">384</div>
+              </article>
+
+              <article class="stat-card green">
+                <div class="stat-label">Panneaux <strong>affichés</strong></div>
+                <span class="shield check" aria-hidden="true"></span>
+                <div class="stat-value">0</div>
+                <div class="stat-percent">0,00%</div>
+              </article>
+
+              <article class="stat-card orange">
+                <div class="stat-label">Panneaux <strong>restants à afficher</strong></div>
+                <div class="roller" aria-hidden="true"><span class="roller-handle"></span></div>
+                <div class="stat-value">0</div>
+                <div class="stat-percent">0,00%</div>
+              </article>
+
+              <article class="stat-card cyan">
+                <div class="stat-label"><strong>Nouveaux</strong> panneaux</div>
+                <span class="shield plus-icon" aria-hidden="true"></span>
+                <div class="stat-value">383</div>
+                <div class="stat-percent">99,74%</div>
+              </article>
+
+              <article class="stat-card red">
+                <div class="stat-label">Panneaux <strong>absents</strong></div>
+                <span class="shield cross" aria-hidden="true"></span>
+                <div class="stat-value">1</div>
+                <div class="stat-percent">0,26%</div>
+              </article>
+
+              <article class="stat-card purple">
+                <div class="stat-label">Panneaux <strong>non géodécodé</strong></div>
+                <div class="roller" aria-hidden="true"><span class="roller-handle"></span></div>
+                <div class="stat-value">0</div>
+                <div class="stat-percent">0,00%</div>
+              </article>
+            </div>
+
+            <dl class="details">
+              <div class="detail-row">
+                <dt>Nom de la campagne</dt>
+                <dd>Municipales 2026 - Paris 2nd tour</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Description</dt>
+                <dd>Campagne d'affichage du second tour des élections municipales à Paris</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Type de la campagne</dt>
+                <dd>Electorale</dd>
+              </div>
+            </dl>
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function syncScreen() {
+      document.body.classList.toggle("dashboard-mode", window.location.hash === "#dashboard");
+    }
+
+    window.addEventListener("hashchange", syncScreen);
+    syncScreen();
+  </script>
+</body>
+</html>

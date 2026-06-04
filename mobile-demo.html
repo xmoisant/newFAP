@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>France Affichage Plus - Démo mobile</title>
+  <style>
+    :root {
+      --blue: #078fc3;
+      --blue-dark: #075f86;
+      --ink: #1d2a33;
+      --surface: #f7fafc;
+      --line: rgba(255, 255, 255, .28);
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(40, 176, 223, .22), transparent 26rem),
+        linear-gradient(135deg, #eef4f7, #d9e6ec 45%, #c7d8df);
+    }
+
+    .demo-shell {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(280px, 390px) minmax(280px, 480px);
+      align-items: center;
+      justify-content: center;
+      gap: 44px;
+      padding: 28px;
+    }
+
+    .phone {
+      position: relative;
+      width: min(390px, calc(100vw - 32px));
+      aspect-ratio: 9 / 16;
+      border: 10px solid #101820;
+      border-radius: 34px;
+      background: #000;
+      box-shadow: 0 28px 70px rgba(17, 44, 64, .34), 0 8px 20px rgba(17, 44, 64, .22);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      top: 7px;
+      left: 50%;
+      width: 34%;
+      height: 18px;
+      border-radius: 0 0 16px 16px;
+      transform: translateX(-50%);
+      background: #101820;
+      z-index: 4;
+      opacity: .92;
+      pointer-events: none;
+    }
+
+    .screen-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .hotspot {
+      position: absolute;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+      z-index: 3;
+      border-radius: 14px;
+    }
+
+    .hotspot:focus-visible {
+      outline: 3px solid rgba(255, 255, 255, .9);
+      outline-offset: 2px;
+      box-shadow: 0 0 0 6px rgba(0, 143, 195, .7);
+    }
+
+    .pulse {
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .9);
+      transform: translate(-50%, -50%);
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, .52);
+      animation: pulse 1.8s infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      70% {
+        box-shadow: 0 0 0 18px rgba(255, 255, 255, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+      }
+    }
+
+    .control-panel {
+      max-width: 480px;
+      padding: 30px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .7);
+      box-shadow: 0 20px 60px rgba(17, 44, 64, .16);
+      backdrop-filter: blur(14px);
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.7px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      color: #143444;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.03;
+      font-weight: 300;
+    }
+
+    .summary {
+      margin: 0 0 24px;
+      color: #54616a;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .screen-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-height: 40px;
+      color: var(--blue-dark);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .screen-index {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      color: #fff;
+      background: var(--blue);
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .demo-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .demo-button {
+      height: 46px;
+      border: 1px solid var(--blue);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--blue);
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .demo-button.primary {
+      background: var(--blue);
+      color: #fff;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(9, 1fr);
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .step-dot {
+      height: 7px;
+      border: 0;
+      border-radius: 999px;
+      background: #bed0d8;
+      cursor: pointer;
+    }
+
+    .step-dot.active {
+      background: var(--blue);
+    }
+
+    .hint {
+      margin: 16px 0 0;
+      color: #6c7a83;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .mobile-controls {
+      display: none;
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      grid-template-columns: 46px 1fr 46px;
+      align-items: center;
+      gap: 10px;
+      z-index: 8;
+      pointer-events: none;
+    }
+
+    .mobile-controls button {
+      min-height: 46px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(0, 143, 195, .92);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .22);
+      font-size: 23px;
+      font-weight: 700;
+      pointer-events: auto;
+    }
+
+    .mobile-label {
+      min-height: 46px;
+      display: grid;
+      place-items: center;
+      padding: 0 14px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(20, 52, 68, .76);
+      font-size: 13px;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .2);
+    }
+
+    @media (max-width: 900px) {
+      body {
+        background: #111820;
+      }
+
+      .demo-shell {
+        min-height: 100dvh;
+        display: grid;
+        grid-template-columns: 1fr;
+        place-items: center;
+        padding: 0;
+      }
+
+      .phone {
+        width: min(100vw, 56.25dvh);
+        height: min(100dvh, 177.7778vw);
+        aspect-ratio: 9 / 16;
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .phone::before {
+        display: none;
+      }
+
+      .control-panel {
+        display: none;
+      }
+
+      .mobile-controls {
+        display: grid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="demo-shell">
+    <section class="phone" aria-label="Prototype mobile interactif">
+      <img id="screenImage" class="screen-image" src="assets/mobile/splash.jpg" alt="">
+      <div id="hotspots"></div>
+      <div id="pulse" class="pulse" aria-hidden="true"></div>
+    </section>
+
+    <aside class="control-panel" aria-label="Contrôles de démonstration">
+      <p class="eyebrow">Démo mobile</p>
+      <h1>France Affichage Plus</h1>
+      <p class="summary">Parcours cliquable basé sur les captures fournies : connexion, carte, menu, sélection de panneau, ajout de photo et validation.</p>
+      <div class="screen-title">
+        <span id="screenIndex" class="screen-index">1</span>
+        <span id="screenTitle">Splashscreen</span>
+      </div>
+      <div class="demo-actions">
+        <button id="prevButton" class="demo-button">Précédent</button>
+        <button id="nextButton" class="demo-button primary">Suivant</button>
+      </div>
+      <div id="steps" class="steps" aria-label="Écrans de la démo"></div>
+      <p class="hint">Les zones actives de l’écran simulent les gestes principaux : connexion, menu, bouton plus, panneau, validation et retour.</p>
+    </aside>
+  </main>
+
+  <nav class="mobile-controls" aria-label="Navigation de démonstration">
+    <button id="mobilePrev" aria-label="Écran précédent">‹</button>
+    <div id="mobileLabel" class="mobile-label">Splashscreen</div>
+    <button id="mobileNext" aria-label="Écran suivant">›</button>
+  </nav>
+
+  <script>
+    const screens = [
+      {
+        id: "splash",
+        title: "Splashscreen",
+        image: "assets/mobile/splash.jpg",
+        pulse: [50, 78],
+        hotspots: [
+          { label: "Continuer vers la connexion", target: "login", x: 0, y: 0, w: 100, h: 100 }
+        ]
+      },
+      {
+        id: "login",
+        title: "Connexion",
+        image: "assets/mobile/login.png",
+        pulse: [50, 66],
+        hotspots: [
+          { label: "Se connecter", target: "map", x: 30, y: 63, w: 40, h: 7 },
+          { label: "Mot de passe oublié", target: "login", x: 32, y: 91, w: 36, h: 5 }
+        ]
+      },
+      {
+        id: "map",
+        title: "Carte accueil",
+        image: "assets/mobile/map.png",
+        pulse: [87, 86],
+        hotspots: [
+          { label: "Ouvrir le menu", target: "drawer", x: 0, y: 5, w: 17, h: 9 },
+          { label: "Ajouter un panneau", target: "photo", x: 78, y: 79, w: 20, h: 15 },
+          { label: "Zoomer sur Paris", target: "zoom", x: 30, y: 46, w: 34, h: 29 },
+          { label: "Afficher une fiche panneau", target: "panel", x: 42, y: 58, w: 23, h: 18 }
+        ]
+      },
+      {
+        id: "drawer",
+        title: "Menu latéral",
+        image: "assets/mobile/drawer.png",
+        pulse: [8, 5],
+        hotspots: [
+          { label: "Retour à la carte", target: "map", x: 0, y: 2, w: 16, h: 9 },
+          { label: "Accueil", target: "map", x: 0, y: 22, w: 61, h: 8 },
+          { label: "Déconnexion", target: "login", x: 16, y: 87, w: 31, h: 6 }
+        ]
+      },
+      {
+        id: "zoom",
+        title: "Carte zoomée",
+        image: "assets/mobile/zoom.jpg",
+        pulse: [46, 55],
+        hotspots: [
+          { label: "Ouvrir le menu", target: "drawer", x: 0, y: 5, w: 16, h: 8 },
+          { label: "Voir le panneau central", target: "panel", x: 37, y: 49, w: 18, h: 15 },
+          { label: "Ajouter un panneau", target: "photo", x: 80, y: 83, w: 18, h: 13 }
+        ]
+      },
+      {
+        id: "panel",
+        title: "Détail panneau",
+        image: "assets/mobile/panel.png",
+        pulse: [25, 72],
+        hotspots: [
+          { label: "Fermer la fiche", target: "zoom", x: 78, y: 39, w: 10, h: 8 },
+          { label: "Afficher ce panneau", target: "photo", x: 6, y: 68, w: 39, h: 10 },
+          { label: "Aller vers ce panneau", target: "zoom", x: 47, y: 68, w: 36, h: 10 },
+          { label: "Ajouter un panneau", target: "photo", x: 77, y: 84, w: 22, h: 14 }
+        ]
+      },
+      {
+        id: "photo",
+        title: "Nouveau panneau",
+        image: "assets/mobile/photo.png",
+        pulse: [50, 95],
+        hotspots: [
+          { label: "Retour carte", target: "zoom", x: 0, y: 3, w: 15, h: 7 },
+          { label: "Ajouter une photo", target: "photo", x: 65, y: 57, w: 32, h: 17 },
+          { label: "Valider", target: "confirm", x: 32, y: 93, w: 36, h: 6 }
+        ]
+      },
+      {
+        id: "confirm",
+        title: "Confirmation",
+        image: "assets/mobile/confirm.png",
+        pulse: [64, 58],
+        hotspots: [
+          { label: "Non", target: "photo", x: 20, y: 55, w: 30, h: 7 },
+          { label: "Oui", target: "success", x: 51, y: 55, w: 30, h: 7 }
+        ]
+      },
+      {
+        id: "success",
+        title: "Validation réussie",
+        image: "assets/mobile/success.png",
+        pulse: [50, 58],
+        hotspots: [
+          { label: "OK", target: "map", x: 36, y: 55, w: 28, h: 7 }
+        ]
+      }
+    ];
+
+    const screenImage = document.getElementById("screenImage");
+    const hotspotsNode = document.getElementById("hotspots");
+    const pulse = document.getElementById("pulse");
+    const screenTitle = document.getElementById("screenTitle");
+    const screenIndex = document.getElementById("screenIndex");
+    const mobileLabel = document.getElementById("mobileLabel");
+    const stepsNode = document.getElementById("steps");
+    const prevButtons = [document.getElementById("prevButton"), document.getElementById("mobilePrev")];
+    const nextButtons = [document.getElementById("nextButton"), document.getElementById("mobileNext")];
+
+    let currentIndex = 0;
+
+    function screenById(id) {
+      return screens.findIndex((screen) => screen.id === id);
+    }
+
+    function goTo(index) {
+      currentIndex = (index + screens.length) % screens.length;
+      const screen = screens[currentIndex];
+      screenImage.src = screen.image;
+      screenImage.alt = screen.title;
+      screenTitle.textContent = screen.title;
+      mobileLabel.textContent = screen.title;
+      screenIndex.textContent = String(currentIndex + 1);
+      pulse.style.left = `${screen.pulse[0]}%`;
+      pulse.style.top = `${screen.pulse[1]}%`;
+
+      hotspotsNode.replaceChildren();
+      screen.hotspots.forEach((hotspot) => {
+        const button = document.createElement("button");
+        button.className = "hotspot";
+        button.type = "button";
+        button.setAttribute("aria-label", hotspot.label);
+        button.style.left = `${hotspot.x}%`;
+        button.style.top = `${hotspot.y}%`;
+        button.style.width = `${hotspot.w}%`;
+        button.style.height = `${hotspot.h}%`;
+        button.addEventListener("click", () => goTo(screenById(hotspot.target)));
+        hotspotsNode.appendChild(button);
+      });
+
+      [...stepsNode.children].forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentIndex);
+      });
+    }
+
+    screens.forEach((screen, index) => {
+      const dot = document.createElement("button");
+      dot.className = "step-dot";
+      dot.type = "button";
+      dot.setAttribute("aria-label", screen.title);
+      dot.addEventListener("click", () => goTo(index));
+      stepsNode.appendChild(dot);
+    });
+
+    prevButtons.forEach((button) => button.addEventListener("click", () => goTo(currentIndex - 1)));
+    nextButtons.forEach((button) => button.addEventListener("click", () => goTo(currentIndex + 1)));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        goTo(currentIndex - 1);
+      }
+      if (event.key === "ArrowRight") {
+        goTo(currentIndex + 1);
+      }
+    });
+
+    goTo(0);
+  </script>
+</body>
+</html>
