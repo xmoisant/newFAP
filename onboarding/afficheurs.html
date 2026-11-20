@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guide des afficheurs · New FAP</title>
+  <style>
+:root {
+  color-scheme: light;
+  --ink: #14334a;
+  --muted: #425d71;
+  --link: #005b82;
+  --navy: #10384e;
+  --line: #d2e2ea;
+  --wash: #eff6f8;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--wash);
+  color: var(--ink);
+  font: 1rem/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.wrap { width: min(100% - 2rem, 49rem); margin-inline: auto; }
+header {
+  background: var(--navy);
+  color: #fff;
+  padding-block: clamp(1.75rem, 5vw, 3rem);
+}
+.brand { margin: 0 0 .2rem; color: #c0e9f3; font-weight: 700; }
+h1, h2, h3 { line-height: 1.18; letter-spacing: -.025em; }
+h1 { margin: 0 0 .55rem; font-size: clamp(2rem, 6vw, 3.15rem); }
+h2 { margin: 0 0 .65rem; font-size: clamp(1.4rem, 4vw, 1.85rem); }
+h3 { margin: 1rem 0 .4rem; font-size: 1.13rem; }
+p { margin: .55rem 0; }
+header p:last-of-type { color: #e1f3f8; }
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .8rem;
+  margin-top: .75rem;
+}
+nav a { display: inline-flex; align-items: center; min-height: 44px; color: #fff; }
+a { color: var(--link); text-underline-offset: .2em; }
+a:focus-visible { outline: 3px solid #dc7909; outline-offset: 4px; }
+main { padding-block: 1.1rem 1.4rem; }
+section {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: .85rem;
+  margin-block: 0 .85rem;
+  padding: clamp(1rem, 3.8vw, 1.6rem);
+  scroll-margin: 1rem;
+}
+[id] { scroll-margin-top: 1rem; }
+section > :last-child { margin-bottom: 0; }
+li + li { margin-block-start: .35rem; }
+ol, ul { margin: .5rem 0 .85rem; padding-inline-start: 1.4rem; }
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-block: .35rem;
+  padding: .45rem .8rem;
+  border-radius: .5rem;
+  background: var(--link);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+.cta:hover { background: var(--navy); }
+.note { border-inline-start: .25rem solid var(--link); padding: .55rem .8rem; background: var(--wash); }
+footer { color: var(--muted); font-size: .9rem; padding-block-end: 1.25rem; }
+@media print {
+  body, header, section { background: #fff; color: #000; }
+  .wrap { width: 100%; }
+  header { padding-block: .25rem; }
+  header p:last-of-type, .brand { color: #000; }
+  nav { display: none; }
+  section { padding: .45rem 0; border: 0; }
+  h2, h3 { break-after: avoid; }
+  .cta { background: none; color: var(--link); padding: 0; min-height: 0; }
+}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <p class="brand">France Affichage Plus</p>
+      <h1>Guide des afficheurs</h1>
+      <p>Installez le raccourci sur votre téléphone, réalisez une intervention et vérifiez son envoi.</p>
+      <nav aria-label="Sommaire">
+      <a href="#compte">Mon compte</a>
+      <a href="#raccourci">Raccourci mobile</a>
+      <a href="#premier-tour">Premier tour</a>
+      <a href="#second-tour">Second tour</a>
+      <a href="#envois">GPS et envois</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+<section id="compte">
+  <h2>Activer votre compte</h2>
+  <ol>
+    <li>Ouvrez le lien personnel reçu par e-mail. Il est valable sept jours et utilisable une seule fois.</li>
+    <li>Saisissez et confirmez votre mot de passe, puis sélectionnez <strong>Créer mon mot de passe</strong>.</li>
+    <li>Lorsque le message <strong>Votre accès est créé</strong> apparaît, sélectionnez <strong>Se connecter</strong>.</li>
+  </ol>
+  <a class="cta" href="https://app.fapmobile.fr/">Ouvrir New FAP</a>
+  <p>Votre compte est déjà actif et vous avez oublié votre mot de passe&nbsp;? Choisissez <strong>Mot de passe oublié&nbsp;?</strong> sur l’écran de connexion.</p>
+</section>
+<section id="raccourci">
+  <h2>Ajouter FAP Mobile à l’écran d’accueil</h2>
+  <p>Après avoir activé votre compte, ouvrez <a href="https://app.fapmobile.fr/">app.fapmobile.fr</a> dans un onglet ordinaire de Safari sur iPhone ou de Chrome sur Android. Créez le raccourci depuis cette adresse.</p>
+  <h3>iPhone · Safari</h3>
+  <ol>
+    <li>Touchez <strong>Partager</strong>. Si le bouton n’apparaît pas, touchez d’abord <strong>Plus</strong>.</li>
+    <li>Faites défiler le menu et choisissez <strong>Sur l’écran d’accueil</strong>. Si cette action manque, ouvrez <strong>Modifier les actions</strong> pour la retrouver.</li>
+    <li>Si l’option <strong>Ouvrir comme app web</strong> apparaît, désactivez-la pour que le raccourci s’ouvre dans Safari. Nommez-le <strong>FAP Mobile</strong>, puis touchez <strong>Ajouter</strong>.</li>
+  </ol>
+  <p><a href="https://support.apple.com/fr-fr/guide/iphone/iph42ab2f3a7/ios">Voir l’aide Apple</a></p>
+  <h3>Android · Chrome</h3>
+  <ol>
+    <li>Touchez le menu <strong>⋮</strong> à droite de la barre d’adresse.</li>
+    <li>Choisissez <strong>Installer et créer un raccourci</strong>, puis <strong>Créer un raccourci</strong>. Selon la version de Chrome, le menu peut afficher <strong>Ajouter à l’écran d’accueil</strong>.</li>
+    <li>Nommez le raccourci <strong>FAP Mobile</strong> si Chrome le propose, puis touchez <strong>Ajouter</strong>.</li>
+  </ol>
+  <p><a href="https://support.google.com/chrome/answer/15085120?co=GENIE.Platform%3DAndroid&amp;hl=fr">Voir l’aide Google Chrome</a></p>
+  <p class="note"><strong>Vérifiez le raccourci.</strong> Depuis votre écran d’accueil, touchez l’icône avec une connexion Internet. Connectez-vous si nécessaire, puis vérifiez que votre campagne s’affiche.</p>
+</section>
+<section id="premier-tour">
+  <h2>Premier tour · Créer un emplacement</h2>
+  <p>Avant de partir, ouvrez <strong>Missions terrain</strong> avec une connexion Internet. Vérifiez la campagne, le tour et le passage indiqués.</p>
+  <ol>
+    <li>Une fois sur place, touchez <strong>Ajouter un emplacement</strong>.</li>
+    <li>Touchez <strong>Prendre une photo</strong>. Autorisez l’accès à l’appareil photo et à la localisation si votre téléphone le demande. Cadrez le panneau et ses abords. Vous pouvez joindre jusqu’à cinq photos. La première situe l’emplacement. Vérifiez la position et l’adresse proposées.</li>
+    <li>Choisissez <strong>Réalisé</strong>, <strong>Absent</strong> ou <strong>À revoir</strong>. Ajoutez une observation si vous sélectionnez <strong>Absent</strong> ou <strong>À revoir</strong>.</li>
+    <li>Touchez <strong>Enregistrer l’intervention</strong>. Attendez le message <strong>Emplacement, intervention et photos confirmés par le serveur</strong>. En cas de coupure, ouvrez <strong>Envois</strong> dans FAP. Voir <a href="#envoi-en-attente">comment reprendre un envoi en attente</a>.</li>
+  </ol>
+</section>
+<section id="second-tour">
+  <h2>Second tour · Intervenir sur un emplacement existant</h2>
+  <p>FAP reprend les emplacements validés au premier tour. Pour le passage en cours, les afficheurs de votre fournisseur voient les mêmes emplacements. Répartissez les déplacements avec votre équipe pour qu’une seule personne se rende à chaque panneau.</p>
+  <ol>
+    <li>Dans <strong>Missions terrain</strong>, sélectionnez le bon passage. Ouvrez l’emplacement depuis la carte ou <strong>Afficher la liste</strong>, puis vérifiez son adresse.</li>
+    <li>Ajoutez les nouvelles photos prises sur place. Choisissez le résultat et renseignez une observation pour <strong>Absent</strong> ou <strong>À revoir</strong>.</li>
+    <li>Touchez <strong>Enregistrer l’intervention</strong> et vérifiez que l’envoi est confirmé.</li>
+  </ol>
+  <p>Si une reprise est demandée, ouvrez la mission concernée, lisez le motif et ajoutez les photos qui documentent votre nouvelle intervention sur le même emplacement.</p>
+</section>
+<section id="envois">
+  <h2>Résoudre un problème de GPS ou d’envoi</h2>
+  <h3>Réactiver la localisation sur iPhone · Safari</h3>
+  <ol>
+    <li>Dans l’onglet de FAP, touchez l’icône du <strong>menu de la page</strong>, à gauche de la barre d’adresse. Sur certaines versions, ce bouton affiche <strong>aA</strong>.</li>
+    <li>Ouvrez <strong>Réglages du site web</strong>. Si nécessaire, touchez d’abord <strong>…</strong> dans le menu de la page. Choisissez <strong>Position</strong>, puis <strong>Autoriser</strong> pour ce site.</li>
+    <li>Si la position reste bloquée, ouvrez <strong>Réglages → Confidentialité et sécurité → Service de localisation</strong> sur l’iPhone. Activez le service, puis ouvrez <strong>Sites web Safari</strong> si cette ligne est présente. Choisissez <strong>Lorsque l’app est active</strong> et activez <strong>Position exacte</strong> si l’option est proposée.</li>
+  </ol>
+  <p><a href="https://support.apple.com/fr-fr/guide/iphone/-iphb01fc3c85/ios">Aide Safari</a> · <a href="https://support.apple.com/fr-fr/102647">Réglages de localisation de l’iPhone</a></p>
+  <h3>Réactiver la localisation sur Android · Chrome</h3>
+  <ol>
+    <li>Dans l’onglet de FAP, touchez l’icône d’informations sur le site, à gauche de la barre d’adresse. Ouvrez <strong>Autorisations → Position</strong>, puis autorisez l’accès pour FAP.</li>
+    <li>Si ce réglage n’apparaît pas, ouvrez <strong>⋮ → Paramètres → Paramètres des sites → Position</strong> dans Chrome. Activez les demandes de position si elles sont bloquées. Si FAP figure parmi les sites non autorisés, sélectionnez-le pour modifier son autorisation.</li>
+    <li>Si la localisation est coupée sur le téléphone, ouvrez <strong>Paramètres → Position</strong> (parfois <strong>Localisation</strong>) et activez <strong>Utiliser la position</strong>. Vérifiez ensuite l’autorisation de Chrome&nbsp;: appui long sur l’icône <strong>Chrome → Infos sur l’appli → Autorisations → Position</strong>. Autorisez l’accès pendant l’utilisation de l’application, puis activez <strong>Utiliser la position exacte</strong> si l’option est proposée.</li>
+  </ol>
+  <p><a href="https://support.google.com/chrome/answer/142065?co=GENIE.Platform%3DAndroid&amp;hl=fr">Aide Chrome</a> · <a href="https://support.google.com/android/answer/6179507?hl=fr">Autorisations de localisation sur Android</a></p>
+  <p class="note"><strong>Reprendre la photo déjà prise.</strong> Restez sur place et revenez dans le même onglet de FAP. Touchez <strong>Réessayer avec cette photo</strong>, <strong>Réessayer la photo</strong> ou <strong>Réessayer la localisation</strong>, selon l’écran. Si le navigateur vous le demande, autorisez la position. Vérifiez que la photo est géolocalisée avant de poursuivre.</p>
+  <h3 id="envoi-en-attente">Un envoi est en attente</h3>
+  <p>Rétablissez la connexion sur le même téléphone, dans le même navigateur et avec le même compte. Ouvrez <strong>Envois</strong> et touchez <strong>Synchroniser maintenant</strong> si nécessaire. Vérifiez la confirmation. Le compteur revient à zéro si l’intervention était le seul envoi en attente.</p>
+  <p class="note">Si la réception reste incertaine, conservez le brouillon ou l’envoi existant et contactez votre fournisseur. Indiquez la campagne, le tour, le passage, le repère du lieu et le message affiché.</p>
+  <h3>Vous ne voyez pas la mission prévue</h3>
+  <p>Vérifiez le compte connecté, la campagne, le tour et le passage, puis demandez à votre fournisseur de vérifier votre accès à la mission.</p>
+  <p class="note"><strong>Sur la campagne d’exercice.</strong> Créez un emplacement depuis le raccourci, puis intervenez sur un emplacement existant du second tour. Avec votre référent, reprenez un envoi après une coupure et vérifiez sa confirmation.</p>
+</section>
+  </main>
+  <footer class="wrap">New FAP · <a href="https://app.fapmobile.fr/">app.fapmobile.fr</a></footer>
+</body>
+</html>
