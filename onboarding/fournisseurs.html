@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guide des fournisseurs · New FAP</title>
+  <style>
+:root {
+  color-scheme: light;
+  --ink: #14334a;
+  --muted: #425d71;
+  --link: #005b82;
+  --navy: #10384e;
+  --line: #d2e2ea;
+  --wash: #eff6f8;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--wash);
+  color: var(--ink);
+  font: 1rem/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.wrap { width: min(100% - 2rem, 49rem); margin-inline: auto; }
+header {
+  background: var(--navy);
+  color: #fff;
+  padding-block: clamp(1.75rem, 5vw, 3rem);
+}
+.brand { margin: 0 0 .2rem; color: #c0e9f3; font-weight: 700; }
+h1, h2, h3 { line-height: 1.18; letter-spacing: -.025em; }
+h1 { margin: 0 0 .55rem; font-size: clamp(2rem, 6vw, 3.15rem); }
+h2 { margin: 0 0 .65rem; font-size: clamp(1.4rem, 4vw, 1.85rem); }
+h3 { margin: 1rem 0 .4rem; font-size: 1.13rem; }
+p { margin: .55rem 0; }
+header p:last-of-type { color: #e1f3f8; }
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem .8rem;
+  margin-top: .75rem;
+}
+nav a { display: inline-flex; align-items: center; min-height: 44px; color: #fff; }
+a { color: var(--link); text-underline-offset: .2em; }
+a:focus-visible { outline: 3px solid #dc7909; outline-offset: 4px; }
+main { padding-block: 1.1rem 1.4rem; }
+section {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: .85rem;
+  margin-block: 0 .85rem;
+  padding: clamp(1rem, 3.8vw, 1.6rem);
+  scroll-margin: 1rem;
+}
+section > :last-child { margin-bottom: 0; }
+li + li { margin-block-start: .35rem; }
+ol, ul { margin: .5rem 0 .85rem; padding-inline-start: 1.4rem; }
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-block: .35rem;
+  padding: .45rem .8rem;
+  border-radius: .5rem;
+  background: var(--link);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+.cta:hover { background: var(--navy); }
+.note { border-inline-start: .25rem solid var(--link); padding: .55rem .8rem; background: var(--wash); }
+footer { color: var(--muted); font-size: .9rem; padding-block-end: 1.25rem; }
+@media print {
+  body, header, section { background: #fff; color: #000; }
+  .wrap { width: 100%; }
+  header { padding-block: .25rem; }
+  header p:last-of-type, .brand { color: #000; }
+  nav { display: none; }
+  section { padding: .45rem 0; border: 0; }
+  h2, h3 { break-after: avoid; }
+  .cta { background: none; color: var(--link); padding: 0; min-height: 0; }
+}
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <p class="brand">France Affichage Plus</p>
+      <h1>Guide des fournisseurs</h1>
+      <p>Invitez vos afficheurs, suivez l’avancement de votre équipe et consultez les preuves terrain.</p>
+      <nav aria-label="Sommaire">
+      <a href="#compte">Mon compte</a>
+      <a href="#ordinateur">Sur ordinateur</a>
+      <a href="#telephone">Sur téléphone</a>
+      <a href="#raccourci">Raccourci mobile</a>
+      <a href="#second-tour">Second tour</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+<section id="compte">
+  <h2>Activer votre compte</h2>
+  <ol>
+    <li>Ouvrez le lien personnel reçu par e-mail. Il est valable sept jours et utilisable une seule fois.</li>
+    <li>Saisissez et confirmez votre mot de passe, puis sélectionnez <strong>Créer mon mot de passe</strong>.</li>
+    <li>Lorsque le message <strong>Votre accès est créé</strong> apparaît, sélectionnez <strong>Se connecter</strong>.</li>
+  </ol>
+  <a class="cta" href="https://app.fapmobile.fr/">Ouvrir New FAP</a>
+  <p>Votre compte est déjà actif et vous avez oublié votre mot de passe&nbsp;? Choisissez <strong>Mot de passe oublié&nbsp;?</strong> sur l’écran de connexion.</p>
+</section>
+<section id="ordinateur">
+  <h2>Préparer et suivre votre équipe sur ordinateur</h2>
+  <ol>
+    <li><strong>Vérifiez votre périmètre.</strong> Depuis le <strong>Tableau de bord</strong>, ouvrez <strong>Campagnes</strong>. Choisissez la campagne concernée et vérifiez le département et les <strong>Dates des tours</strong>.</li>
+    <li><strong>Invitez vos afficheurs.</strong> Ouvrez <strong>Utilisateurs</strong>, puis <strong>Nouvel afficheur</strong>. Renseignez le prénom, le nom, l’adresse e-mail et le téléphone. Vérifiez l’adresse e-mail, puis cliquez sur <strong>Créer</strong>. L’afficheur reçoit son invitation personnelle.</li>
+    <li><strong>Suivez le passage.</strong> Dans <strong>Avancement</strong>, vérifiez la campagne, le tour, le passage et le département. <strong>Attendus</strong> indique le nombre prévu. <strong>Réalisés déclarés</strong> indique le nombre déclaré réalisé. <strong>Réalisés contrôlés</strong> indique le nombre validé par FAP. <strong>Restants</strong> tient compte des emplacements déclarés réalisés et des absents. Avec 10 emplacements attendus, 6 déclarés réalisés et 2 absents, il en reste 2.</li>
+    <li><strong>Consultez une preuve.</strong> Dans <strong>Photos terrain</strong>, sélectionnez le tour et le passage. Ouvrez un emplacement sur la carte ou dans la liste, puis choisissez l’intervention. Cliquez sur <strong>Agrandir la photo</strong> ou sur <strong>Photos de l’afficheur</strong> pour retrouver les preuves du même auteur.</li>
+  </ol>
+</section>
+<section id="telephone">
+  <h2>Passer du suivi au terrain sur téléphone</h2>
+  <ol>
+    <li><a href="#raccourci">Ajoutez le raccourci FAP Mobile</a>, puis ouvrez-le avec une connexion Internet.</li>
+    <li>Dans <strong>Missions terrain</strong>, touchez <strong>Fournisseur</strong>. Vous pouvez aussi choisir <strong>Passer en mode fournisseur</strong> dans le menu de votre profil.</li>
+    <li>Sur le <strong>Tableau de bord</strong>, touchez <strong>Ouvrir la navigation</strong> pour accéder à <strong>Avancement</strong> ou <strong>Photos terrain</strong>.</li>
+    <li>Pour revenir à vos interventions, ouvrez <strong>Missions terrain</strong> ou choisissez <strong>Passer en mode afficheur</strong> dans le profil. Cette vue affiche les missions confiées à votre compte.</li>
+  </ol>
+</section>
+<section id="raccourci">
+  <h2>Ajouter FAP Mobile à l’écran d’accueil</h2>
+  <p>Après avoir activé votre compte, ouvrez <a href="https://app.fapmobile.fr/">app.fapmobile.fr</a> dans un onglet ordinaire de Safari sur iPhone ou de Chrome sur Android. Créez le raccourci depuis cette adresse.</p>
+  <h3>iPhone · Safari</h3>
+  <ol>
+    <li>Touchez <strong>Partager</strong>. Si le bouton n’apparaît pas, touchez d’abord <strong>Plus</strong>.</li>
+    <li>Faites défiler le menu et choisissez <strong>Sur l’écran d’accueil</strong>. Si cette action manque, ouvrez <strong>Modifier les actions</strong> pour la retrouver.</li>
+    <li>Si l’option <strong>Ouvrir comme app web</strong> apparaît, désactivez-la pour que le raccourci s’ouvre dans Safari. Nommez-le <strong>FAP Mobile</strong>, puis touchez <strong>Ajouter</strong>.</li>
+  </ol>
+  <p><a href="https://support.apple.com/fr-fr/guide/iphone/iph42ab2f3a7/ios">Voir l’aide Apple</a></p>
+  <h3>Android · Chrome</h3>
+  <ol>
+    <li>Touchez le menu <strong>⋮</strong> à droite de la barre d’adresse.</li>
+    <li>Choisissez <strong>Installer et créer un raccourci</strong>, puis <strong>Créer un raccourci</strong>. Selon la version de Chrome, le menu peut afficher <strong>Ajouter à l’écran d’accueil</strong>.</li>
+    <li>Nommez le raccourci <strong>FAP Mobile</strong> si Chrome le propose, puis touchez <strong>Ajouter</strong>.</li>
+  </ol>
+  <p><a href="https://support.google.com/chrome/answer/15085120?co=GENIE.Platform%3DAndroid&amp;hl=fr">Voir l’aide Google Chrome</a></p>
+  <p class="note"><strong>Vérifiez le raccourci.</strong> Depuis votre écran d’accueil, touchez l’icône avec une connexion Internet. Connectez-vous si nécessaire, puis vérifiez que votre campagne s’affiche.</p>
+</section>
+<section id="second-tour">
+  <h2>Second tour · Coordonner les déplacements</h2>
+  <p>FAP prépare automatiquement, pour chaque passage du second tour, les emplacements validés au premier tour dans le périmètre de votre organisation. Tous vos afficheurs peuvent consulter et traiter ces emplacements. Les missions sont partagées dès que le passage est disponible.</p>
+  <p>Convenez avec l’équipe de la personne qui se rend à chaque panneau. Chaque intervention doit être documentée par de nouvelles photos pour le passage en cours. Suivez les envois dans <strong>Avancement</strong> et consultez les preuves dans <strong>Photos terrain</strong>.</p>
+</section>
+<section id="aide">
+  <h2>Obtenir de l’aide</h2>
+  <p>Si une mission ou une photo manque, vérifiez la campagne, le département, le tour et le passage. Pour une photo, vérifiez aussi l’intervention sélectionnée et la confirmation de l’envoi côté afficheur.</p>
+  <p>Si le problème persiste, ouvrez <strong>Contact FAP</strong> depuis le menu de l’application et indiquez le contexte et le message affiché.</p>
+</section>
+  </main>
+  <footer class="wrap">New FAP · <a href="https://app.fapmobile.fr/">app.fapmobile.fr</a></footer>
+</body>
+</html>
